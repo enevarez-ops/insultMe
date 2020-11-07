@@ -1,27 +1,37 @@
-$(document).ready(function (){
+$(document).ready(function () {
 
 
-$("#insultGen").on("click", function(){
+    $(".card-header").toggleClass("hidden");
+    $(".blockquote-footer").toggleClass("hidden");
+
+  $("#insultGen").on("click", function () {
     const settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": "https://cors-anywhere.herokuapp.com/https://evilinsult.com/generate_insult.php?lang=en&type=json",
-        "method": "GET", 
-        "data": "json"
-        // "headers": {
-            // "x-rapidapi-key": "1a7ba9b86amsh693356748f18cfbp1938bfjsncc3687788037",
-            // "x-rapidapi-host": "lakerolmaker-insult-generator-v1.p.rapidapi.com"
-        // }
+      async: true,
+      crossDomain: true,
+      url:
+        "https://cors-anywhere.herokuapp.com/https://evilinsult.com/generate_insult.php?lang=en&type=json",
+      method: "GET",
     };
-    
+
+
     $.ajax(settings).done(function (response) {
-        console.log(response);
-        $("#insultHere").append(response.data[0].insult);
+      var firstSplit = response.split("''");
 
+      var newResponse = firstSplit[0].split(":");
 
-    })
-    
-})
+      var realResponse = newResponse[3].split('","');
 
+      console.log(realResponse);
+
+      $("#insultHere").empty();
+      $("#insultHere").append(realResponse[0]);
+
+      $(".card-header").toggleClass("hidden");
+      $(".blockquote-footer").toggleClass("hidden");
+
+    });
+  });
+
+  
 
 });
